@@ -36,7 +36,7 @@ export class TextureLoader extends AbstractService {
 
   /**
    * @summary Loads the panorama texture(s)
-   * @param {string|string[]|PSV.Cubemap} panorama
+   * @param {PSV.Panorama} panorama
    * @param {PSV.PanoData | PSV.PanoDataProvider} [newPanoData]
    * @returns {Promise.<PSV.TextureData>}
    * @throws {PSV.PSVError} when the image cannot be loaded
@@ -376,7 +376,7 @@ export class TextureLoader extends AbstractService {
 
   /**
    * @summary Preload a panorama file without displaying it
-   * @param {string|string[]|PSV.Cubemap} panorama
+   * @param {PSV.Panorama} panorama
    * @returns {Promise}
    */
   preloadPanorama(panorama) {

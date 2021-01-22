@@ -106,6 +106,27 @@ export function getClosest(el, selector) {
 }
 
 /**
+ * @summary Gets the position of an element in the viewer without reflow
+ * @description Will gives the same result as getBoundingClientRect() as soon as there are no CSS transforms
+ * @memberOf PSV.utils
+ * @param {HTMLElement} el
+ * @return {{left: number, top: number}}
+ */
+export function getPosition(el) {
+  let left = 0;
+  let top = 0;
+  let test = el;
+
+  while (test) {
+    left += (test.offsetLeft - test.scrollLeft + test.clientLeft);
+    top += (test.offsetTop - test.scrollTop + test.clientTop);
+    test = test.offsetParent;
+  }
+
+  return { left, top };
+}
+
+/**
  * @summary Map between keyboard events `keyCode|which` and `key`
  * @memberOf PSV.utils
  * @type {Object<int, string>}

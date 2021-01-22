@@ -84,6 +84,7 @@ export function getAngle(position1, position2) {
 
 /**
  * Returns the distance between two points on a sphere of radius one
+ * {@link http://www.movable-type.co.uk/scripts/latlong.html}
  * @memberOf PSV.utils
  * @param {number[]} p1
  * @param {number[]} p2
@@ -96,4 +97,21 @@ export function greatArcDistance(p1, p2) {
   const x = (λ2 - λ1) * Math.cos((φ1 + φ2) / 2);
   const y = (φ2 - φ1);
   return Math.sqrt(x * x + y * y);
+}
+
+/**
+ * Returns the bearing between two points
+ * {@link http://www.movable-type.co.uk/scripts/latlong.html}
+ * @memberOf PSV.utils
+ * @param {number[]} p1
+ * @param {number[]} p2
+ * @return {number}
+ */
+export function bearing(p1, p2) {
+  const [λ1, φ1] = p1;
+  const [λ2, φ2] = p2;
+
+  const y = Math.sin(λ2 - λ1) * Math.cos(φ2);
+  const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1);
+  return Math.atan2(y, x);
 }

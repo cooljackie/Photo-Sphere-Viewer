@@ -11,7 +11,7 @@ This plugin is available in the core `photo-sphere-viewer` package in `dist/plug
 
 ## Usage
 
-The plugins allow to define `latitudeRange` and `longitudeRange` to lock to viewable zone. It affects manual moves and automatic rotation.
+The plugin allows to define `latitudeRange` and `longitudeRange` to lock to viewable zone. It affects manual moves and automatic rotation.
 
 ```js
 const viewer = new PhotoSphereViewer.Viewer({

@@ -261,6 +261,8 @@ export class Renderer extends AbstractService {
       this.mesh = this.__createSphere();
     }
 
+    this.mesh.userData = { psvSphere: true };
+
     this.scene.add(this.mesh);
 
     // create canvas container

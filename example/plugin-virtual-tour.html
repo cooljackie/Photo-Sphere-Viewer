@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoSphereViewer - virtual tour demo</title>
+
+  <link rel="stylesheet" href="../dist/photo-sphere-viewer.css">
+  <link rel="stylesheet" href="../dist/plugins/markers.css">
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    #photosphere {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="photosphere"></div>
+
+<script src="../node_modules/three/build/three.js"></script>
+<script src="../node_modules/promise-polyfill/dist/polyfill.js"></script>
+<script src="../node_modules/uevent/browser.js"></script>
+<script src="../dist/photo-sphere-viewer.js"></script>
+<script src="../dist/plugins/markers.js"></script>
+<script src="../dist/plugins/virtual-tour.js"></script>
+
+<script>
+  const PSV = new PhotoSphereViewer.Viewer({
+    container  : 'photosphere',
+    loadingImg : 'assets/photosphere-logo.gif',
+    caption    : 'Cape Florida Light, Key Biscayne <b>&copy; Pixexid</b>',
+    defaultLong: '100deg',
+    plugins    : [
+      PhotoSphereViewer.MarkersPlugin,
+      [PhotoSphereViewer.VirtualTourPlugin, {
+        positionMode: PhotoSphereViewer.VirtualTourPlugin.MODE_GPS,
+        renderMode  : PhotoSphereViewer.VirtualTourPlugin.MODE_3D,
+      }],
+    ],
+  });
+
+  const virtualTour = PSV.getPlugin(PhotoSphereViewer.VirtualTourPlugin);
+
+  const base = 'https://photo-sphere-viewer-data.netlify.app/';
+  virtualTour.setNodes([
+    {
+      id      : '1',
+      panorama: base + 'key-biscayne-1.jpg',
+      name    : 'One',
+      links   : [
+        { nodeId: '2' },
+      ],
+      markers: [
+        {
+          id: 'marker-1',
+          image: 'assets/pin-red.png',
+          tooltip: 'Cape Florida Light, Key Biscayne',
+          width    : 32,
+          height   : 32,
+          anchor   : 'bottom center',
+          longitude: '105deg',
+          latitude: '35deg',
+        }
+      ],
+      position: [-80.156479, 25.666725, 3],
+      panoData: { poseHeading: 327 },
+    },
+    {
+      id      : '2',
+      panorama: base + 'key-biscayne-2.jpg',
+      name    : 'Two',
+      links   : [
+        { nodeId: '3' },
+        { nodeId: '1' },
+      ],
+      position: [-80.156168, 25.666623, 3],
+      panoData: { poseHeading: 318 },
+    },
+    {
+      id      : '3',
+      panorama: base + 'key-biscayne-3.jpg',
+      name    : 'Three',
+      links   : [
+        { nodeId: '4' },
+        { nodeId: '2' },
+        { nodeId: '5' },
+      ],
+      position: [-80.155932, 25.666498, 5],
+      panoData: { poseHeading: 328 },
+    },
+    {
+      id      : '4',
+      panorama: base + 'key-biscayne-4.jpg',
+      name    : 'Four',
+      links   : [
+        { nodeId: '3' },
+        { nodeId: '5' },
+      ],
+      position: [-80.156089, 25.666357, 3],
+      panoData: { poseHeading: 78 },
+    },
+    {
+      id      : '5',
+      panorama: base + 'key-biscayne-5.jpg',
+      name    : 'Five',
+      links   : [
+        { nodeId: '6' },
+        { nodeId: '3' },
+        { nodeId: '4' },
+      ],
+      position: [-80.156292, 25.666446, 2],
+      panoData: { poseHeading: 190 },
+    },
+    {
+      id      : '6',
+      panorama: base + 'key-biscayne-6.jpg',
+      name    : 'Six',
+      links   : [
+        { nodeId: '5' },
+      ],
+      position: [-80.156465, 25.666496, 2],
+      panoData: { poseHeading: 328 },
+    },
+  ]);
+</script>
+</body>
+</html>

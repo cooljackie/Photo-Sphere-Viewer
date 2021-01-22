@@ -424,7 +424,7 @@ export class Viewer extends EventEmitter {
    * @description Loads a new panorama file, optionally changing the camera position/zoom and activating the transition animation.<br>
    * If the "options" parameter is not defined, the camera will not move and the ongoing animation will continue.<br>
    * If another loading is already in progress it will be aborted.
-   * @param {string|string[]|PSV.Cubemap} path - URL of the new panorama file
+   * @param {PSV.Panorama} path - URL of the new panorama file
    * @param {PSV.PanoramaOptions} [options]
    * @returns {Promise}
    */

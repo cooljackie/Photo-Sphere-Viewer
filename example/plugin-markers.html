@@ -56,11 +56,16 @@
   <h1>HTML Ipsum Presents</h1>
 
   <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas.
-    Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas
-    semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien
-    ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi.
-    Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a
-      href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+    Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+    egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et
+    sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet,
+    wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac
+    dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54469.108394396746!2d6.9617553450295855!3d44.151844842645815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12cdaf6678af879d%3A0xcabc15aee7b89386!2sParc%20national%20du%20Mercantour!5e0!3m2!1sfr!2sfr!4v1611498421096!5m2!1sfr!2sfr"
+    width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0">
+  </iframe>
 
   <h2>Header Level 2</h2>
 
@@ -70,8 +75,8 @@
   </ol>
 
   <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet
-    congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus
-    est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+    congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis,
+    tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
 
   <h3>Header Level 3</h3>
 
@@ -79,16 +84,6 @@
     <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
     <li>Aliquam tincidunt mauris eu risus.</li>
   </ul>
-
-  <img src="assets/pin-blue.png" style="width:100%"/>
-
-  <pre><code>
-#header h1 a {
-	display: block;
-	width: 300px;
-	height: 80px;
-}
-</code></pre>
 </script>
 
 <!-- pattern used for the polygon marker -->
@@ -132,6 +127,7 @@
         markers: (function () {
           var a = [];
 
+          // add markers all hover the sphere
           for (var i = 0; i < Math.PI * 2; i += Math.PI / 4) {
             for (var j = -Math.PI / 2 + Math.PI / 4; j < Math.PI / 2; j += Math.PI / 4) {
               a.push({
@@ -150,6 +146,7 @@
             }
           }
 
+          // marker with content
           a.push({
             id       : 'lorem',
             tooltip  : {
@@ -165,6 +162,7 @@
             anchor   : 'bottom center',
           });
 
+          // big polygon to test the handling of points behind the camera
           a.push({
             id        : 'polygon-sky',
             svgStyle  : {
@@ -186,6 +184,7 @@
             ],
           });
 
+          // polygon with custom style
           a.push({
             id        : 'polygon-1',
             polygonPx: [
@@ -231,6 +230,7 @@
             },
           });
 
+          // simple polyline
           a.push({
             id        : 'polyline',
             polylinePx: [2478, 1635, 2184, 1747, 1674, 1953, 1166, 1852, 709, 1669, 301, 1519, 94, 1399, 34, 1356],
@@ -243,9 +243,10 @@
             tooltip   : 'Polyline',
           });
 
+          // HTML & image markers
           a.push({
             id       : 'html-img-demo',
-            html     : 'HTML & Image',
+            html     : 'HTML & Image demo',
             scale    : [0.5, 1.5],
             className: 'demo-label',
             longitude: 0.5,
@@ -277,6 +278,7 @@
             latitude : -0.4,
           });
 
+          // SVG markers
           a.push({
             id       : 'svg-demo',
             html     : 'SVG marker demo',
@@ -343,6 +345,7 @@
             anchor   : 'center left',
           });
 
+          // Scalling markers
           a.push({
             id       : 'scale-demo',
             html     : 'Marker scale demo',

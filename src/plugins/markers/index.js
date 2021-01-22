@@ -973,7 +973,7 @@ export default class MarkersPlugin extends AbstractPlugin {
    * @private
    */
   __refreshUi() {
-    const nbMarkers = this.getNbMarkers();
+    const nbMarkers = Object.values(this.markers).filter(m => !m.config.hideList).length;
     const markersButton = this.psv.navbar.getButton(MarkersButton.id, false);
     const markersListButton = this.psv.navbar.getButton(MarkersListButton.id, false);
 

@@ -1,6 +1,7 @@
 import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import inject from '@rollup/plugin-inject';
+import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
 import fs from 'fs';
 import path from 'path';
@@ -70,6 +71,9 @@ const baseConfig = {
       include: [
         'src/**/*.svg',
       ],
+    }),
+    json({
+      compact: true,
     }),
   ],
 };

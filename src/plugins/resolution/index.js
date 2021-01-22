@@ -10,7 +10,7 @@ DEFAULTS.lang.resolution = 'Quality';
  * @typedef {Object} PSV.plugins.ResolutionPlugin.Resolution
  * @property {string} id
  * @property {string} label
- * @property {string|string[]|PSV.Cubemap} panorama
+ * @property {PSV.Panorama} panorama
  */
 
 /**

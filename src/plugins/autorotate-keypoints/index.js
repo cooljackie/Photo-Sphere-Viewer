@@ -68,6 +68,11 @@ export default class AutorotateKeypointsPlugin extends AbstractPlugin {
     };
 
     /**
+     * @type {PSV.plugins.AutorotateKeypointsPlugin.Keypoints[]} keypoints
+     */
+    this.keypoints = null;
+
+    /**
      * @type {PSV.plugins.MarkersPlugin}
      * @private
      */
@@ -83,6 +88,7 @@ export default class AutorotateKeypointsPlugin extends AbstractPlugin {
   destroy() {
     this.psv.off(CONSTANTS.EVENTS.AUTOROTATE, this);
 
+    delete this.markers;
     delete this.keypoints;
     delete this.state;
 
