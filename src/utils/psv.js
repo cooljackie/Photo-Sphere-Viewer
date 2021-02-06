@@ -66,7 +66,7 @@ const CSS_POSITIONS = {
  * @memberOf PSV.utils
  * @description The implementation is as close as possible to the "background-position" specification
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
- * @param {string|object} value
+ * @param {string|PSV.Point} value
  * @returns {PSV.Point}
  */
 export function parsePosition(value) {

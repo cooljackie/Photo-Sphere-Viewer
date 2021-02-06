@@ -4,6 +4,7 @@
   "description": "A JavaScript library to display Photo Sphere panoramas",
   "homepage": "https://photo-sphere-viewer.js.org",
   "main": "dist/photo-sphere-viewer.js",
+  "types": "src/types/index.d.ts",
   "files": [
     "src/",
     "dist/"
@@ -32,7 +33,7 @@
   },
   "dependencies": {
     "three": "^0.125.2",
-    "uevent": "~2.0.0"
+    "uevent": "~2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
