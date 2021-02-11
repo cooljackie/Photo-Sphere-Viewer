@@ -1,4 +1,5 @@
 import { PSVError } from '../PSVError';
+import EquirectangularAdapter from '../adapters/equirectangular';
 import { bound, clone, deepmerge, each, logWarn, parseAngle, parseSpeed } from '../utils';
 import { ACTIONS } from './constants';
 
@@ -11,6 +12,7 @@ import { ACTIONS } from './constants';
 export const DEFAULTS = {
   panorama           : null,
   container          : null,
+  adapter            : null,
   caption            : null,
   loadingImg         : null,
   loadingTxt         : 'Loading...',
@@ -81,6 +83,7 @@ export const READONLY_OPTIONS = {
   panorama : 'Use setPanorama method to change the panorama',
   panoData : 'Use setPanorama method to change the panorama',
   container: 'Cannot change viewer container',
+  adapter  : 'Cannot change adapter',
   plugins  : 'Cannot change plugins',
 };
 
@@ -94,6 +97,17 @@ export const CONFIG_PARSERS = {
       throw new PSVError('No value given for container.');
     }
     return container;
+  },
+  adapter        : (adapter) => {
+    if (!adapter) {
+      return [EquirectangularAdapter];
+    }
+    else if (Array.isArray(adapter)) {
+      return adapter;
+    }
+    else {
+      return [adapter];
+    }
   },
   defaultLong    : (defaultLong) => {
     // defaultLat is between 0 and PI

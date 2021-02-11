@@ -23,29 +23,15 @@ container: document.querySelector('.viewer')
 container: 'viewer' // will target [id="viewer"]
 ```
 
+#### `adapter`
+- default: `equirectangular`
+
+Which adapter used to load the panorama.
+
 #### `panorama` (required)
-- type: `string | string[] | object`
+- type: `*`
 
-Path to the panorama image(s). It must be a single string for equirectangular panoramas and an array or an object for cubemaps.
-
-```js
-// Equirectangular panorama :
-panorama: 'path/to/panorama.jpg'
-
-// Cubemap as array (order is important) :
-panorama: [
-  'path/to/left.jpg', 'path/to/front.jpg',
-  'path/to/right.jpg', 'path/to/back.jpg',
-  'path/to/top.jpg', 'path/to/bottom.jpg',
-]
-
-// Cubemap as object :
-panorama: {
-  left:   'path/to/left.jpg',  front:  'path/to/front.jpg',
-  right:  'path/to/right.jpg', back:   'path/to/back.jpg',
-  top:    'path/to/top.jpg',   bottom: 'path/to/bottom.jpg',
-}
-```
+Path to the panorama. Must be a single URL for the default equirectangular adapter. Other adapters support other values.
 
 #### `plugins`
 - type: `array`

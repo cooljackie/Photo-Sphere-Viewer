@@ -37,6 +37,7 @@
 <script src="../node_modules/uevent/browser.js"></script>
 <script src="../node_modules/nosleep.js/dist/NoSleep.js"></script>
 <script src="../dist/photo-sphere-viewer.js"></script>
+<script src="../dist/adapters/CubemapAdapter.js"></script>
 <script src="../dist/plugins/markers.js"></script>
 
 <script>
@@ -67,6 +68,7 @@
 
   var PSV = new PhotoSphereViewer.Viewer({
     container : 'photosphere',
+    adapter   : PhotoSphereViewer.CubemapAdapter,
     panorama  : panos[0].url,
     caption   : panos[0].desc,
     loadingImg: 'assets/photosphere-logo.gif',
@@ -86,7 +88,8 @@
             PSV.setPanorama(panos[i].url, { longitude: 0, latitude: 0, zoom: 50 })
               .then(function () {
                 PSV.navbar.setCaption(panos[i].desc);
-              }, function () {});
+              }, function () {
+              });
           };
         }()),
       },

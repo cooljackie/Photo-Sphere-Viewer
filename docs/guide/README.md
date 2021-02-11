@@ -42,7 +42,7 @@ You can also [download the latest release](https://github.com/mistic100/Photo-Sp
 
 Include all JS & CSS files in your page manually or with your favorite bundler and init the viewer.
 
-The `panorama` must be an [equirectangular projection](https://en.wikipedia.org/wiki/Equirectangular_projection) of your photo. You can also use [cubemap projection](./cubemap.md) with a special syntax.
+The `panorama` must be an [equirectangular projection](https://en.wikipedia.org/wiki/Equirectangular_projection) of your photo. Other modes are supported through [adapters](./adapters/).
 
 :::: tabs
 

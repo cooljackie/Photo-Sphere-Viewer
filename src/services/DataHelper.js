@@ -70,7 +70,7 @@ export class DataHelper extends AbstractService {
    * @returns {PSV.Position}
    */
   textureCoordsToSphericalCoords(point) {
-    if (this.prop.isCubemap) {
+    if (this.prop.isCubemap) { // TODO
       throw new PSVError('Unable to use texture coords with cubemap.');
     }
 
@@ -90,7 +90,7 @@ export class DataHelper extends AbstractService {
    * @returns {PSV.Point}
    */
   sphericalCoordsToTextureCoords(position) {
-    if (this.prop.isCubemap) {
+    if (this.prop.isCubemap) { // TODO
       throw new PSVError('Unable to use texture coords with cubemap.');
     }
 

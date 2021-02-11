@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Animation } from '../Animation';
-import { CUBE_VERTICES, EVENTS, SPHERE_RADIUS, SPHERE_VERTICES } from '../data/constants';
+import { EVENTS, SPHERE_RADIUS } from '../data/constants';
 import { SYSTEM } from '../data/system';
 import { isExtendedPosition, isNil, logWarn } from '../utils';
 import { AbstractService } from './AbstractService';
@@ -172,29 +172,13 @@ export class Renderer extends AbstractService {
    * @package
    */
   setTexture(textureData) {
-    const { texture, panoData } = textureData;
-    this.prop.panoData = panoData;
-
     if (!this.scene) {
       this.__createScene();
     }
 
-    if (this.prop.isCubemap) {
-      for (let i = 0; i < 6; i++) {
-        if (this.mesh.material[i].map) {
-          this.mesh.material[i].map.dispose();
-        }
+    this.prop.panoData = textureData.panoData;
 
-        this.mesh.material[i].map = texture[i];
-      }
-    }
-    else {
-      if (this.mesh.material.map) {
-        this.mesh.material.map.dispose();
-      }
-
-      this.mesh.material.map = texture;
-    }
+    this.psv.adapter.setTexture(this.mesh, textureData);
 
     this.psv.needsUpdate();
 
@@ -254,61 +238,13 @@ export class Renderer extends AbstractService {
     this.scene = new THREE.Scene();
     this.scene.add(this.camera);
 
-    if (this.prop.isCubemap) {
-      this.mesh = this.__createCubemap();
-    }
-    else {
-      this.mesh = this.__createSphere();
-    }
+    this.mesh = this.psv.adapter.createMesh();
 
     this.scene.add(this.mesh);
 
     // create canvas container
     this.renderer.domElement.className = 'psv-canvas';
     this.canvasContainer.appendChild(this.renderer.domElement);
-  }
-
-  /**
-   * @summary Creates the sphere mesh
-   * @param {number} [scale=1]
-   * @returns {external:THREE.Mesh}
-   * @private
-   */
-  __createSphere(scale = 1) {
-    // The middle of the panorama is placed at longitude=0
-    const geometry = new THREE.SphereGeometry(SPHERE_RADIUS * scale, SPHERE_VERTICES, SPHERE_VERTICES, -Math.PI / 2);
-
-    const material = new THREE.MeshBasicMaterial({
-      side: THREE.BackSide,
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.scale.set(-1, 1, 1);
-
-    return mesh;
-  }
-
-  /**
-   * @summary Creates the cube mesh
-   * @param {number} [scale=1]
-   * @returns {external:THREE.Mesh}
-   * @private
-   */
-  __createCubemap(scale = 1) {
-    const cubeSize = SPHERE_RADIUS * 2 * scale;
-    const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize, CUBE_VERTICES, CUBE_VERTICES, CUBE_VERTICES);
-
-    const materials = [];
-    for (let i = 0; i < 6; i++) {
-      materials.push(new THREE.MeshBasicMaterial({
-        side: THREE.BackSide,
-      }));
-    }
-
-    const mesh = new THREE.Mesh(geometry, materials);
-    mesh.scale.set(1, 1, -1);
-
-    return mesh;
   }
 
   /**
@@ -319,36 +255,13 @@ export class Renderer extends AbstractService {
    * @package
    */
   transition(textureData, options) {
-    const { texture, panoData } = textureData;
-
-    let positionProvided = isExtendedPosition(options);
+    const positionProvided = isExtendedPosition(options);
     const zoomProvided = 'zoom' in options;
 
-    let mesh;
-
-    if (this.prop.isCubemap) {
-      if (positionProvided) {
-        logWarn('cannot perform cubemap transition to different position');
-        positionProvided = false;
-      }
-
-      mesh = this.__createCubemap(0.9);
-
-      mesh.material.forEach((material, i) => {
-        material.map = texture[i];
-        material.transparent = true;
-        material.opacity = 0;
-      });
-    }
-    else {
-      mesh = this.__createSphere(0.9);
-
-      mesh.material.map = texture;
-      mesh.material.transparent = true;
-      mesh.material.opacity = 0;
-
-      this.setSphereCorrection(panoData, options.sphereCorrection, mesh);
-    }
+    const mesh = this.psv.adapter.createMesh(0.5);
+    this.psv.adapter.setTexture(mesh, textureData);
+    this.psv.adapter.setTextureOpacity(mesh, 0);
+    this.setSphereCorrection(textureData.panoData, options.sphereCorrection, mesh);
 
     // rotate the new sphere to make the target position face the camera
     if (positionProvided) {
@@ -356,18 +269,11 @@ export class Renderer extends AbstractService {
 
       // Longitude rotation along the vertical axis
       const verticalAxis = new THREE.Vector3(0, 1, 0);
-      mesh.rotateOnWorldAxis(verticalAxis, cleanPosition.longitude - this.prop.position.longitude);
+      mesh.rotateOnWorldAxis(verticalAxis, cleanPosition.longitude - this.psv.prop.position.longitude);
 
       // Latitude rotation along the camera horizontal axis
       const horizontalAxis = new THREE.Vector3(0, 1, 0).cross(this.camera.getWorldDirection(new THREE.Vector3())).normalize();
-      mesh.rotateOnWorldAxis(horizontalAxis, cleanPosition.latitude - this.prop.position.latitude);
-
-      // TODO: find a better way to handle ranges
-      if (this.config.latitudeRange || this.config.longitudeRange) {
-        this.config.longitudeRange = null;
-        this.config.latitudeRange = null;
-        logWarn('trying to perform transition with longitudeRange and/or latitudeRange, ranges cleared');
-      }
+      mesh.rotateOnWorldAxis(horizontalAxis, cleanPosition.latitude - this.psv.prop.position.latitude);
     }
 
     this.scene.add(mesh);
@@ -381,14 +287,7 @@ export class Renderer extends AbstractService {
       duration  : options.transition,
       easing    : 'outCubic',
       onTick    : (properties) => {
-        if (this.prop.isCubemap) {
-          for (let i = 0; i < 6; i++) {
-            mesh.material[i].opacity = properties.opacity;
-          }
-        }
-        else {
-          mesh.material.opacity = properties.opacity;
-        }
+        this.psv.adapter.setTextureOpacity(mesh, properties.opacity);
 
         if (zoomProvided) {
           this.psv.zoom(properties.zoom);
@@ -400,14 +299,11 @@ export class Renderer extends AbstractService {
       .then(() => {
         // remove temp sphere and transfer the texture to the main sphere
         this.setTexture(textureData);
-        this.scene.remove(mesh);
+        this.setSphereCorrection(textureData.panoData, options.sphereCorrection);
 
+        this.scene.remove(mesh);
         mesh.geometry.dispose();
         mesh.geometry = null;
-
-        if (!this.prop.isCubemap) {
-          this.setSphereCorrection(panoData, options.sphereCorrection);
-        }
 
         // actually rotate the camera
         if (positionProvided) {

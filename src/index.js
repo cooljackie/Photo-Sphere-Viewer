@@ -7,6 +7,7 @@ import './data/constants'; // for jsdoc
 import { SYSTEM } from './data/system';
 import { AbstractPlugin } from './plugins/AbstractPlugin';
 import { PSVError } from './PSVError';
+import { AbstractAdapter } from './adapters/AbstractAdapter';
 import './styles/index.scss';
 import * as utils from './utils';
 import { Viewer } from './Viewer';
@@ -14,6 +15,7 @@ import { Viewer } from './Viewer';
 export {
   AbstractButton,
   AbstractPlugin,
+  AbstractAdapter,
   Animation,
   CONSTANTS,
   DEFAULTS,
@@ -125,7 +127,7 @@ export {
 
 /**
  * @typedef {Object} PSV.TextureData
- * @summary Result of the {@link PSV.TextureLoader#loadTexture} method
+ * @summary Result of the {@link PSV.adapters.AbstractAdapter#loadTexture} method
  * @property {external:THREE.Texture|external:THREE.Texture[]} texture
  * @property {PSV.PanoData} [panoData]
  */

@@ -59,38 +59,6 @@ export const INERTIA_WINDOW = 300;
 export const SPHERE_RADIUS = 100;
 
 /**
- * @summary Number of vertice of the THREE.SphereGeometry
- * @memberOf PSV.constants
- * @type {number}
- * @constant
- */
-export const SPHERE_VERTICES = 64;
-
-/**
- * @summary Number of vertices of each side of the THREE.BoxGeometry
- * @memberOf PSV.constants
- * @type {number}
- * @constant
- */
-export const CUBE_VERTICES = 8;
-
-/**
- * @summary Order of cube textures for arrays
- * @memberOf PSV.constants
- * @type {number[]}
- * @constant
- */
-export const CUBE_MAP = [0, 2, 4, 5, 3, 1];
-
-/**
- * @summary Order of cube textures for maps
- * @memberOf PSV.constants
- * @type {string[]}
- * @constant
- */
-export const CUBE_HASHMAP = ['left', 'right', 'top', 'bottom', 'back', 'front'];
-
-/**
  * @summary Property name added to viewer element
  * @memberOf PSV.constants
  * @type {string}

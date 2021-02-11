@@ -13,6 +13,10 @@ import pkg from './package.json';
 const plugins = fs.readdirSync(path.join(__dirname, 'src/plugins'))
   .filter(p => p !== 'AbstractPlugin.js');
 
+const adapters = fs.readdirSync(path.join(__dirname, 'src/adapters'))
+  .filter(p => p !== 'AbstractAdapter.js')
+  .filter(p => p !== 'equirectangular');
+
 const banner = `/*!
 * Photo Sphere Viewer ${pkg.version}
 * @copyright 2014-2015 Jérémy Heleine
@@ -146,6 +150,17 @@ export default [
       ...secondaryConfig.output,
       file: `dist/plugins/${p}.js`,
       name: `PhotoSphereViewer.${camelize(p)}Plugin`,
+    },
+    plugins: secondaryConfig.plugins(),
+  }))
+).concat(
+  adapters.map(p => ({
+    ...secondaryConfig,
+    input  : `src/adapters/${p}/index.js`,
+    output : {
+      ...secondaryConfig.output,
+      file: `dist/adapters/${p}.js`,
+      name: `PhotoSphereViewer.${camelize(p)}Adapter`,
     },
     plugins: secondaryConfig.plugins(),
   }))
