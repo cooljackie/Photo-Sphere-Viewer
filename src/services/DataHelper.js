@@ -145,7 +145,7 @@ export class DataHelper extends AbstractService {
 
     this.psv.renderer.raycaster.setFromCamera(screen, this.psv.renderer.camera);
 
-    const intersects = this.psv.renderer.raycaster.intersectObjects(this.psv.renderer.scene.children);
+    const intersects = this.psv.renderer.raycaster.intersectObjects(this.psv.renderer.scene.children, true);
 
     if (intersects.length === 1) {
       return intersects[0].point;

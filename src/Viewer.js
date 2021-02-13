@@ -457,6 +457,8 @@ export class Viewer extends EventEmitter {
       if (!('panoData' in options)) {
         options.panoData = this.config.panoData;
       }
+
+      this.prop.direction = this.dataHelper.sphericalCoordsToVector3(options);
     }
 
     if (options.transition === undefined || options.transition === true) {

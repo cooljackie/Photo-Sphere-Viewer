@@ -48,6 +48,7 @@ module.exports = {
               collapsable : false,
               children: [
                 'adapters/cubemap',
+                'adapters/tiles',
               ],
             },
             {

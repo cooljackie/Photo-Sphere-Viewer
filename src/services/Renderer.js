@@ -232,7 +232,7 @@ export class Renderer extends AbstractService {
     this.renderer.setSize(this.prop.size.width, this.prop.size.height);
     this.renderer.setPixelRatio(SYSTEM.pixelRatio);
 
-    this.camera = new THREE.PerspectiveCamera(this.prop.vFov, this.prop.size.width / this.prop.size.height, 1, 3 * SPHERE_RADIUS);
+    this.camera = new THREE.PerspectiveCamera(this.prop.vFov, this.prop.size.width / this.prop.size.height, 1, 2 * SPHERE_RADIUS);
     this.camera.position.set(0, 0, 0);
 
     this.scene = new THREE.Scene();

@@ -56,7 +56,7 @@ export const INERTIA_WINDOW = 300;
  * @type {number}
  * @constant
  */
-export const SPHERE_RADIUS = 100;
+export const SPHERE_RADIUS = 10;
 
 /**
  * @summary Property name added to viewer element

@@ -20,6 +20,19 @@ export class TextureLoader extends AbstractService {
      * @private
      */
     this.requests = [];
+
+    /**
+     * @summary THREE file loader
+     * @type {external:THREE:FileLoader}
+     * @private
+     */
+    this.loader = new THREE.FileLoader();
+
+    if (this.config.withCredentials) {
+      this.loader.setWithCredentials(true);
+    }
+
+    this.loader.setResponseType('blob');
   }
 
   /**
@@ -49,15 +62,7 @@ export class TextureLoader extends AbstractService {
       let progress = 0;
       onProgress && onProgress(progress);
 
-      const loader = new THREE.FileLoader();
-
-      if (this.config.withCredentials) {
-        loader.setWithCredentials(true);
-      }
-
-      loader.setResponseType('blob');
-
-      const request = loader.load(
+      const request = this.loader.load(
         url,
         (result) => {
           const rIdx = this.requests.indexOf(request);
